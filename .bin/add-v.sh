@@ -7,4 +7,4 @@ git commit -m "v$VERSION"
 git tag $VERSION
 git push
 git push origin $VERSION
-npm publish --access=publish
+npm publish --access=public
