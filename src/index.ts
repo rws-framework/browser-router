@@ -1,3 +1,3 @@
-import RoutingService from "./services/RoutingService"
+import RoutingService from './services/RoutingService';
 
-export { RoutingService } 
+export { RoutingService }; 
