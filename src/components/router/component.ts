@@ -1,54 +1,45 @@
-import { RWSRouter, _ROUTING_EVENT_NAME, RouteReturn } from '../../services/RoutingService';
-import RWSViewComponent from '@rws-framework/client/src/components/_component';
-import { applyConstructor } from '@rws-framework/client/src/components/_decorator';
+import { observable  } from '@microsoft/fast-element';
+import RoutingService, { RWSRouter, _ROUTING_EVENT_NAME, RouteReturn, RoutingServiceInstance } from '../../services/RoutingService';
+import RWSViewComponent, { IRWSViewComponent } from '@rws-framework/client/src/components/_component';
+import {RWSInject, RWSView} from '@rws-framework/client/src/components/_decorator';
 
-import {
-    RWSView, observable, RWSInject,
-    ConfigService, ConfigServiceInstance, 
-    DOMService, DOMServiceInstance,
-    UtilsService, UtilsServiceInstance,
-    ApiService, ApiServiceInstance,
-    NotifyService, NotifyServiceInstance
-} from '@rws-framework/client';
-import RoutingService, { RoutingServiceInstance } from '../../services/RoutingService';
-
-@RWSView('rws-router', { ignorePackaging: true })
+@RWSView('rws-router', { ignorePackaging: true})
 export class RouterComponent extends RWSViewComponent {    
     static autoLoadFastElement = false;
     private routing: RWSRouter;
-    private currentComponent: RWSViewComponent;
+    private currentComponent: IRWSViewComponent;
 
     @observable currentUrl: string;
     @observable childComponents: HTMLElement[] = [];    
     slotEl: HTMLElement = null;
 
-    constructor(
-        @RWSInject(RoutingService) protected routingService: RoutingServiceInstance,        
-        @RWSInject(ConfigService) protected config: ConfigServiceInstance,        
-        @RWSInject(DOMService) protected domService: DOMServiceInstance,
-        @RWSInject(UtilsService) protected utilsService: UtilsServiceInstance,
-        @RWSInject(ApiService) protected apiService: ApiServiceInstance,        
-        @RWSInject(NotifyService) protected notifyService: NotifyServiceInstance
-    ) {
-        super(config, domService, utilsService, apiService, notifyService);       
-        applyConstructor(this);
+    constructor(@RWSInject(RoutingService) protected routingService: RoutingServiceInstance){
+        super();
     }
 
     connectedCallback() {
         super.connectedCallback();   
+           
         this.routing = this.routingService.apply(this);   
-            
-        if(this.currentUrl){
+                
+        if(this.currentUrl){            
             this.handleRoute(this.routing.handleRoute(this.currentUrl));      
         }           
     }
 
-    currentUrlChanged(oldValue: string, newValue: string){  
-        if(!this.routing){
-            this.routing = this.routingService.apply(this);       
+    currentUrlChanged(oldValue: string, newValue: string){          
+        if(newValue){       
+            if(!this.routingService){
+                console.log(oldValue, newValue);
+                return;
+            }   
 
-        }     
-        this.handleRoute(this.routing.handleRoute(newValue));
+            if(!this.routing){
+                this.routing = this.routingService.apply(this);       
+
+            }     
+            this.handleRoute(this.routing.handleRoute(newValue));
+        }
     }
 
     private handleRoute(route: RouteReturn){
@@ -64,9 +55,11 @@ export class RouterComponent extends RWSViewComponent {
             component: childComponent
         });
         
-        const newComponent = document.createElement((childComponent as any).definition.name);        
-        newComponent.routeParams = routeParams;
-
+        const newComponent = document.createElement((childComponent as any).definition.name);  
+        if(Object.keys(routeParams).length){
+            newComponent.routeParams = routeParams;
+        }              
+        
         if(this.currentComponent){
             this.getShadowRoot().removeChild(this.currentComponent);
             

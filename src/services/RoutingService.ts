@@ -9,12 +9,13 @@ import ConfigService, { ConfigServiceInstance } from '@rws-framework/client/src/
 type IFrontRoutes = Record<string, unknown>; 
 
 class RoutingService extends TheService {
+    static _DEFAULT: boolean = true;
     private router: Router<any>;
     private routes: IFrontRoutes;
 
     constructor(@UtilsService private utilsService: UtilsServiceInstance, @ConfigService private config: ConfigServiceInstance){
         super();        
-    }    
+    }
 
     public apply(comp: IRWSViewComponent): RWSRouter
     {                    
