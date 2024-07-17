@@ -1,4 +1,4 @@
-import { DefaultRWSPluginOptionsType, RWSPlugin, ConfigService, ConfigServiceInstance } from '@rws-framework/client';
+import { DefaultRWSPluginOptionsType, RWSPlugin, ConfigService, ConfigServiceInstance, RWSContainer} from '@rws-framework/client';
 import { RouterComponent } from './components/router/component';
 import RoutingService, { RoutingServiceInstance, IFrontRoutes, RWSRouter, IRWSRouteResult, renderRouteComponent, RouteReturn, _ROUTING_EVENT_NAME, IRoutingEvent } from './services/RoutingService';
 
@@ -13,7 +13,7 @@ class RWSBrowserRouter extends RWSPlugin<BrowserRouterOpts> {
     }
     
     addRoutes(routes: IFrontRoutes) {
-        const config: ConfigServiceInstance = this.container.get(ConfigService)
+        const config: ConfigServiceInstance = RWSContainer().get(ConfigService)
         config.set('routes', routes);
     }
 }

@@ -3,7 +3,7 @@ import TheService from '@rws-framework/client/src/services/_service';
 import Router from 'url-router';
 import { RWSRouter, IRWSRouteResult, RouteReturn } from '../routing/_router';
 import UtilsService, {UtilsServiceInstance} from '@rws-framework/client/src/services/UtilsService';
-import { IRWSViewComponent } from '@rws-framework/client/src/interfaces/IRWSViewComponent';
+import { IRWSViewComponent } from '@rws-framework/client/src/types/IRWSViewComponent';
 import ConfigService, { ConfigServiceInstance } from '@rws-framework/client/src/services/ConfigService';
 
 type IFrontRoutes = Record<string, unknown>; 
