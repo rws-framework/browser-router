@@ -30,8 +30,7 @@ export class RouterComponent extends RWSViewComponent {
 
     currentUrlChanged(oldValue: string, newValue: string){          
         if(newValue){       
-            if(!this.routingService){
-                console.log(oldValue, newValue);
+            if(!this.routingService){                
                 return;
             }   
 
@@ -49,12 +48,7 @@ export class RouterComponent extends RWSViewComponent {
         this.$emit(_ROUTING_EVENT_NAME, {
             routeName,
             component: childComponent
-        });
-
-        console.log('handleroute',{
-            routeName,
-            component: childComponent
-        });
+        }); 
         
         const newComponent = document.createElement((childComponent as any).definition.name);  
         if(Object.keys(routeParams).length){

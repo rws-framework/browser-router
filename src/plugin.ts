@@ -4,10 +4,7 @@ import RoutingService, {
     RoutingServiceInstance, 
     renderRouteComponent, 
     _ROUTING_EVENT_NAME,
-    IFrontRoutes,
-    IRWSRouteResult,
-    RouteReturn,
-    IRoutingEvent 
+    IFrontRoutes,  
 } from './services/RoutingService';
 import { RWSRouter } from './routing/_router';
 
@@ -16,14 +13,20 @@ interface BrowserRouterOpts extends DefaultRWSPluginOptionsType{
 }
 
 class RWSBrowserRouter extends RWSPlugin<BrowserRouterOpts> {
+    private routingService: RoutingServiceInstance;
     constructor(options: BrowserRouterOpts = { enabled: false }){
         super(options);
-        RoutingService;
+        this.routingService = RWSContainer().get<RoutingServiceInstance>(RoutingService);
     }
     
     addRoutes(routes: IFrontRoutes) {
         const config: ConfigServiceInstance = RWSContainer().get(ConfigService)
         config.set('routes', routes);
+    }
+
+    getRouterService(): RoutingServiceInstance
+    {
+        return this.routingService;
     }
 }
 
