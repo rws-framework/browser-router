@@ -1,11 +1,7 @@
 import Router from 'url-router';
-import {UtilsServiceInstance} from '@rws-framework/client/src/services/UtilsService';
+import { UtilsServiceInstance } from '@rws-framework/client/src/services/UtilsService';
 import { IRWSViewComponent } from '@rws-framework/client/src/types/IRWSViewComponent';
-export type RouteReturn = [string, IRWSViewComponent, Record<string, string>];
-export type IRWSRouteResult = {
-    handler: () => RouteReturn;
-    params: Record<string, string>;
-};  
+import { IRWSRouteResult, RouteReturn } from '../types/router.types';
 
 class RWSRouter {
     private baseComponent: IRWSViewComponent;

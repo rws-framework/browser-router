@@ -1,6 +1,15 @@
-import { DefaultRWSPluginOptionsType, RWSPlugin, ConfigService, ConfigServiceInstance, RWSContainer} from '@rws-framework/client';
+import { DefaultRWSPluginOptionsType, RWSPlugin, ConfigService, ConfigServiceInstance, RWSContainer } from '@rws-framework/client';
 import { RouterComponent } from './components/router/component';
-import RoutingService, { RoutingServiceInstance, IFrontRoutes, RWSRouter, IRWSRouteResult, renderRouteComponent, RouteReturn, _ROUTING_EVENT_NAME, IRoutingEvent } from './services/RoutingService';
+import RoutingService, { 
+    RoutingServiceInstance, 
+    renderRouteComponent, 
+    _ROUTING_EVENT_NAME,
+    IFrontRoutes,
+    IRWSRouteResult,
+    RouteReturn,
+    IRoutingEvent 
+} from './services/RoutingService';
+import { RWSRouter } from './routing/_router';
 
 interface BrowserRouterOpts extends DefaultRWSPluginOptionsType{
     
@@ -28,10 +37,12 @@ export {
     RWSRouter,    
 
     renderRouteComponent,
+    _ROUTING_EVENT_NAME
+};
 
-    IFrontRoutes, 
+export type {
+    IFrontRoutes,
     IRWSRouteResult,
     RouteReturn,
-    _ROUTING_EVENT_NAME, 
-    IRoutingEvent 
-};
+    IRoutingEvent
+} from './types/router.types';
