@@ -8,7 +8,7 @@ import {RWSInject, RWSView} from '@rws-framework/client/src/components/_decorato
 export class RouterComponent extends RWSViewComponent {    
     static autoLoadFastElement = false;
     private routing: RWSRouter;
-    private currentComponent: IRWSViewComponent;
+    private currentComponent: HTMLElement;
 
     @observable currentUrl: string;
     @observable childComponents: HTMLElement[] = [];    
@@ -21,14 +21,14 @@ export class RouterComponent extends RWSViewComponent {
     connectedCallback() {
         super.connectedCallback();   
            
-        this.routing = this.routingService.apply(this);   
-                
-        if(this.currentUrl){            
+        this.routing = this.routingService.apply(this);                
+ 
+        if(this.currentUrl){     
             this.handleRoute(this.routing.handleRoute(this.currentUrl));      
         }           
     }
 
-    currentUrlChanged(oldValue: string, newValue: string){          
+    currentUrlChanged(oldValue: string, newValue: string){   
         if(newValue){       
             if(!this.routingService){                
                 return;

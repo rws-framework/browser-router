@@ -24,7 +24,7 @@ class RWSRouter {
     }
 
     public handleRoute(url: string): RouteReturn | null {
-        const currentRoute = this.find(url);        
+        const currentRoute = this.find(url);  
 
         if(currentRoute === null){
             return null;
