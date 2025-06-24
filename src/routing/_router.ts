@@ -8,30 +8,28 @@ class RWSRouter {
     private urlRouter: Router<any>;
     private utilsService: UtilsServiceInstance;
 
-    constructor(routerComponent: IRWSViewComponent, urlRouter: Router<any>, utilsService: UtilsServiceInstance){
+    constructor(routerComponent: IRWSViewComponent, urlRouter: Router<any>, utilsService: UtilsServiceInstance) {
         this.baseComponent = routerComponent;
         this.urlRouter = urlRouter;
         this.utilsService = utilsService;
 
         window.addEventListener('popstate', (event: Event) => {
-            console.log('pop', event);
+            // console.log('pop', event);
         });
     }
 
-    public routeComponent(newComponent: IRWSViewComponent)
-    {
-        this.baseComponent.appendChild(newComponent);
-    }
-
-    public fireHandler(route: IRWSRouteResult): RouteReturn
-    {     const handler = route.handler();
+    public fireHandler(route: IRWSRouteResult): RouteReturn {
+        const handler = route.handler();
         return [handler[0], handler[1], this.utilsService.mergeDeep(route.params, handler[2])];
     }
 
-    public handleRoute(url: string): RouteReturn
-    {
-        const currentRoute = this.find(url);    
+    public handleRoute(url: string): RouteReturn | null {
+        const currentRoute = this.find(url);        
 
+        if(currentRoute === null){
+            return null;
+        }
+        
         if (history.pushState) {
             window.history.pushState({ path: url }, '', url);
         }
@@ -39,15 +37,13 @@ class RWSRouter {
         return this.fireHandler(currentRoute);
     }
 
-    public handleCurrentRoute(): RouteReturn
-    {
-        const currentRoute = this.find(window.location.pathname);    
+    public handleCurrentRoute(): RouteReturn {
+        const currentRoute = this.find(window.location.pathname);
 
         return this.fireHandler(currentRoute);
     }
 
-    public find(url: string): IRWSRouteResult
-    {
+    public find(url: string): IRWSRouteResult {
         return this.urlRouter.find(url);
     }
 }

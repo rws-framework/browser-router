@@ -43,6 +43,10 @@ export class RouterComponent extends RWSViewComponent {
     }
 
     private handleRoute(route: RouteReturn){
+        if(route === null){
+            return;
+        }
+
         const [routeName, childComponent, routeParams] = route;
 
         this.$emit(_ROUTING_EVENT_NAME, {
