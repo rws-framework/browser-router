@@ -17,8 +17,7 @@ class RoutingService extends TheService {
 
     public apply(comp: IRWSViewComponent): RWSRouter
     {                    
-        this.routes = this.config.get('routes');
-        console.log(this.routes);
+        this.routes = this.config.get('routes');        
         this.router = new Router(this.routes);
    
         return new RWSRouter(comp, this.router, this.utilsService);
