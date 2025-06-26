@@ -4,7 +4,8 @@ import RoutingService, {
     RoutingServiceInstance, 
     renderRouteComponent, 
     _ROUTING_EVENT_NAME,
-    IFrontRoutes,  
+    IFrontRoutes,
+    REGEX_MATCH_PARAM,  
 } from './services/RoutingService';
 import { RWSRouter } from './routing/_router';
 
@@ -38,7 +39,7 @@ export {
     RoutingServiceInstance, 
     RouterComponent, 
     RWSRouter,    
-
+    REGEX_MATCH_PARAM,
     renderRouteComponent,
     _ROUTING_EVENT_NAME
 };
