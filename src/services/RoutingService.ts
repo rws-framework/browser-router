@@ -25,7 +25,11 @@ class RoutingService extends TheService {
     }
 
     compareMatchingPath(compareUrl: string, routePath: string): boolean {
-        let routeParams: { [key: string]: string[] } = {};
+        let routeParams: { [key: string]: string[] } = {};        
+
+        if(compareUrl === routePath) {
+            return true;
+        }
 
         const match = routePath.match(REGEX_MATCH_PARAM);
         
