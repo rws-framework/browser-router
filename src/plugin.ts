@@ -10,7 +10,7 @@ import RoutingService, {
 import { RWSRouter } from './routing/_router';
 
 interface BrowserRouterOpts extends DefaultRWSPluginOptionsType{
-    
+    disableHistory?: boolean;
 }
 
 class RWSBrowserRouter extends RWSPlugin<BrowserRouterOpts> {

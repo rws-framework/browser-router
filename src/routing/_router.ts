@@ -2,16 +2,20 @@ import Router from 'url-router';
 import { UtilsServiceInstance } from '@rws-framework/client/src/services/UtilsService';
 import { IRWSViewComponent } from '@rws-framework/client/src/types/IRWSViewComponent';
 import { IRWSRouteResult, RouteReturn } from '../types/router.types';
+import { BrowserRouterOpts } from '../plugin';
 
 class RWSRouter {
     private baseComponent: IRWSViewComponent;
     private urlRouter: Router<any>;
     private utilsService: UtilsServiceInstance;
+    private routerOpts?: BrowserRouterOpts;
 
-    constructor(routerComponent: IRWSViewComponent, urlRouter: Router<any>, utilsService: UtilsServiceInstance) {
+    constructor(routerComponent: IRWSViewComponent, urlRouter: Router<any>, utilsService: UtilsServiceInstance, routerOpts?: BrowserRouterOpts) {
         this.baseComponent = routerComponent;
         this.urlRouter = urlRouter;
         this.utilsService = utilsService;
+
+        this.routerOpts = routerOpts;
 
         window.addEventListener('popstate', (event: Event) => {
             // console.log('pop', event);
@@ -30,7 +34,7 @@ class RWSRouter {
             return null;
         }
         
-        if (history.pushState) {
+        if ((!this.routerOpts || (this.routerOpts && this.routerOpts.disableHistory !== undefined && !this.routerOpts.disableHistory)) && history.pushState) {
             window.history.pushState({ path: url }, '', url);
         }
 

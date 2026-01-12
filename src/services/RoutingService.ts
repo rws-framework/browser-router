@@ -5,6 +5,7 @@ import UtilsService, { UtilsServiceInstance } from '@rws-framework/client/src/se
 import { IRWSViewComponent } from '@rws-framework/client/src/types/IRWSViewComponent';
 import ConfigService, { ConfigServiceInstance } from '@rws-framework/client/src/services/ConfigService';
 import { IFrontRoutes } from '../types/router.types';
+import { BrowserRouterOpts } from '../plugin';
 
 export const REGEX_MATCH_PARAM = /\/:([a-zA-Z0-9]*)\/?/;
 
@@ -17,11 +18,11 @@ class RoutingService extends TheService {
         super();
     }
 
-    public apply(comp: IRWSViewComponent): RWSRouter {
+    public apply(comp: IRWSViewComponent, routerOpts?: BrowserRouterOpts): RWSRouter {
         this.routes = this.config.get('routes');
         this.router = new Router(this.routes);
 
-        return new RWSRouter(comp, this.router, this.utilsService);
+        return new RWSRouter(comp, this.router, this.utilsService, routerOpts);
     }
 
     compareMatchingPath(compareUrl: string, routePath: string): boolean {
