@@ -11,6 +11,16 @@ import { RWSRouter } from './routing/_router';
 
 interface BrowserRouterOpts extends DefaultRWSPluginOptionsType{
     disableHistory?: boolean;
+    /**
+     * Default props to forward to every routed component. Useful for bundles
+     * like the gate that need to inject the same context (e.g. phoneNumbers)
+     * into every sub-page without hardcoding it in the router.
+     *
+     * Keys are property names on the routed component; values are the values
+     * to assign. Per-instance `injectProps` attribute on `<rws-router>` is
+     * merged on top of these defaults.
+     */
+    injectProps?: Record<string, unknown>;
 }
 
 class RWSBrowserRouter extends RWSPlugin<BrowserRouterOpts> {

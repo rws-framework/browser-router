@@ -33,8 +33,16 @@ class RWSRouter {
         if(currentRoute === null){
             return null;
         }
-        
-        if ((!this.routerOpts || (this.routerOpts && this.routerOpts.disableHistory !== undefined && !this.routerOpts.disableHistory)) && history.pushState) {
+
+        // Only push to window.history when disableHistory is NOT true.
+        // Default behaviour (disableHistory undefined / false) keeps history in sync.
+        // Honour both the plugin-level option AND the per-component attribute so
+        // bundles like the gate can opt out of history changes without affecting
+        // the rest of the app.
+        const pluginDisable = !!(this.routerOpts && this.routerOpts.disableHistory);
+        const componentDisable = !!(this.baseComponent && (this.baseComponent as any).disableHistory);
+        const disableHistory = pluginDisable || componentDisable;
+        if (!disableHistory && history.pushState) {
             window.history.pushState({ path: url }, '', url);
         }
 
