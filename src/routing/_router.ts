@@ -46,8 +46,7 @@ class RWSRouter {
             window.history.pushState({ path: url }, '', url);
             if(hash){
                 window.location.hash = hash;
-            }
-            console.log({url, hash});
+            }            
         }
 
         console.trace(url, hash);
