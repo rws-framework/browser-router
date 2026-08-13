@@ -47,9 +47,7 @@ class RWSRouter {
             if(hash){
                 window.location.hash = hash;
             }            
-        }
-
-        console.trace(url, hash);
+        }        
 
         return this.fireHandler(currentRoute);
     }
