@@ -34,6 +34,7 @@ export class RouterComponent extends RWSViewComponent {
     @observable injectProps: Record<string, unknown> = {};
 
     @observable currentUrl: string;
+    @observable currentHash: string;
     @observable childComponents: HTMLElement[] = [];
     slotEl: HTMLElement = null;
 
@@ -52,7 +53,7 @@ export class RouterComponent extends RWSViewComponent {
     }
 
     currentUrlChanged(oldValue: string, newValue: string){
-        if(newValue){
+        if(newValue && oldValue !== newValue){
             if(!this.routingService){
                 return;
             }
@@ -61,7 +62,17 @@ export class RouterComponent extends RWSViewComponent {
                 this.routing = this.routingService.apply(this);
 
             }
+
+            console.log('hashRoute', this.currentHash);
+
             this.handleRoute(this.routing.handleRoute(newValue));
+        }
+    }
+
+    currentHashChanged(oldValue: string, newValue: string){
+        if(newValue && oldValue !== newValue){
+            console.log('hash', newValue);
+            window.location.hash = newValue;
         }
     }
 
