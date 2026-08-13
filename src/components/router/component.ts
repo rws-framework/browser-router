@@ -48,7 +48,7 @@ export class RouterComponent extends RWSViewComponent {
         this.routing = this.routingService.apply(this);
 
         if(this.currentUrl){
-            this.handleRoute(this.routing.handleRoute(this.currentUrl));
+            this.handleRoute(this.routing.handleRoute(this.currentUrl, this.currentHash));
         }
     }
 

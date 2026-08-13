@@ -27,7 +27,7 @@ class RWSRouter {
         return [handler[0], handler[1], this.utilsService.mergeDeep(route.params, handler[2])];
     }
 
-    public handleRoute(url: string): RouteReturn | null {
+    public handleRoute(url: string, hash?: string): RouteReturn | null {
         const currentRoute = this.find(url);  
 
         if(currentRoute === null){
@@ -44,7 +44,13 @@ class RWSRouter {
         const disableHistory = pluginDisable || componentDisable;
         if (!disableHistory && history.pushState) {
             window.history.pushState({ path: url }, '', url);
+            if(hash){
+                window.location.hash = hash;
+            }
+            console.log({url, hash});
         }
+
+        console.trace(url, hash);
 
         return this.fireHandler(currentRoute);
     }
